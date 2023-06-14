@@ -11,6 +11,7 @@ export default {
             currentPage: 1,
             lastPage: null,
             totalProjects: 0,
+            pageXProject: 0,
             load: false,
         }; 
     },
@@ -30,6 +31,7 @@ export default {
                 this.currentPage = resp.data.results.current_page;
                 this.lastPage = resp.data.results.last_page;
                 this.totalProjects = resp.data.results.total;
+                this.pageXProject = resp.data.results.data.length
             }).finally(() => {
                 this.load = false;
             });
@@ -45,15 +47,20 @@ export default {
     <div class="container">
         <h1 class="text-center my-3">Lista dei progetti</h1>
         <section v-if="!load">
-            <div class="text-end text-secondary my-3">
-                Trovati {{ totalProjects }} Progetti
+            <div class="d-flex justify-content-between text-secondary my-3">
+                <div>
+                    Pagina {{ currentPage }}
+                </div>
+                <div class="">
+                    Stai visualizzando {{ pageXProject }} di {{ totalProjects }} Progetti
+                </div>
             </div>
-            <div class="row row-cols-4 g-3">
+            <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 g-3">
                 <div class="col" v-for="project in projects" :key="project.id">
                     <ProjectCard :project="project"/>
                 </div>
             </div>
-            
+
         </section>
         <section v-else>
             <div class="d-flex align-items-center justify-content-center">

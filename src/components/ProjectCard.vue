@@ -22,16 +22,34 @@ export default {
 
 <template>
     <div class="card h-100">
-        <img v-if="project.image" :src="getImgUrl" :alt="project.title" class="card-img-top">
-        <div v-else class="my-3">
+        <img v-if="project.image" :src="getImgUrl" :alt="project.title" class="card-img-top ms_img_h">
+        <div v-else class="d-flex align-items-center ms_img_h bg-secondary rounded-top">
             <p class="text-center">Nessuna immagine presente per questo progetto</p>
         </div>
         <div class="card-body">
-            <h5 class="text-center">{{ project.title }}</h5>
-
+            <div class="">
+                <h5 class="">{{ project.title }}</h5>
+                <div class="">
+                    <p v-if="project.type" class="text-secondary">Tipologia: {{ project.type.name }}</p>
+                    <p v-else class="text-secondary">Nessuna tipologia inserita</p>
+                </div>
+            </div>
+            <div v-if="project.technologies.length > 0">
+                <h6 class="">Tecnologie utilizzate:</h6>
+                <ul class="list-group">
+                    <li v-for="technology in project.technologies" class="list-group-item">
+                        {{ technology.name }}
+                    </li>
+                </ul>
+            </div>
+            <p v-else>Nessuna tecnologia associata</p>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
+.ms_img_h {
+    height: 200px;
+    image-resolution: c;
+}
 </style>

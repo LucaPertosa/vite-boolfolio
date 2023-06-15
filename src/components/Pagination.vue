@@ -8,25 +8,27 @@ export default {
             store,
         }
     },
-    emits : [
-        'prev-page',
-        'pick-page',
-        'next-page',
+    emits: [
+        'change-page'
     ],
+    props: {
+        currentPage: Number,
+        lastPage: Number,
+    },
 }
 </script>
 
 <template>
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item" :class="{'disabled' : store.currentPage === 1}">
-                <a class="page-link" @click.prevent="$emit('prev-page')" href="">Previous</a>
+            <li class="page-item" :class="{'disabled' : currentPage === 1}">
+                <a class="page-link" @click.prevent="$emit('change-page', currentPage -  1)" href="">Previous</a>
             </li>
-            <li class="page-item" v-for="pageNum in store.lastPage" :class="{'active' : pageNum === store.currentPage}">
-                <a class="page-link" @click.prevent="$emit('pick-page', pageNum)" href="">{{pageNum}}</a>
+            <li class="page-item" v-for="pageNum in lastPage" :class="{'active' : pageNum === currentPage}">
+                <a class="page-link" @click.prevent="$emit('change-page', pageNum)" href="">{{pageNum}}</a>
             </li>
-            <li class="page-item" :class="{'disabled' : store.currentPage === store.lastPage}">
-                <a class="page-link" @click.prevent="$emit('next-page')" href="">Next</a>
+            <li class="page-item" :class="{'disabled' : currentPage === lastPage}">
+                <a class="page-link" @click.prevent="$emit('change-page', currentPage + 1)" href="">Next</a>
             </li>
         </ul>
     </nav>

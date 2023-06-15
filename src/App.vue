@@ -21,20 +21,19 @@ export default {
     },
     methods: {
         getProjects (pageNumber) {
-            this.store.load = true;
+            this.load = true;
             axios.get(`${this.store.apiBaseUrl}/api/projects`, {
                 params: {
                     page: pageNumber,
                 }
             }).then(resp => {
-                console.log(resp);
-                this.store.projects = resp.data.results.data;
-                this.store.currentPage = resp.data.results.current_page;
-                this.store.lastPage = resp.data.results.last_page;
-                this.store.totalProjects = resp.data.results.total;
-                this.store.pageXProject = resp.data.results.data.length
+                this.projects = resp.data.results.data;
+                this.currentPage = resp.data.results.current_page;
+                this.lastPage = resp.data.results.last_page;
+                this.totalProjects = resp.data.results.total;
+                this.pageXProject = resp.data.results.data.length
             }).finally(() => {
-                this.store.load = false;
+                this.load = false;
             });
         }
     },
@@ -49,23 +48,26 @@ export default {
     <div class="container">
         <h1 class="text-center my-3">Lista dei progetti</h1>
         <section v-if="!load">
+            <!-- Page info -->
             <div class="d-flex justify-content-between text-secondary my-3">
                 <div>
-                    Pagina {{ store.currentPage }}
+                    Pagina {{ currentPage }}
                 </div>
                 <div class="">
-                    Stai visualizzando {{ store.pageXProject }} di {{ store.totalProjects }} Progetti
+                    Stai visualizzando {{ pageXProject }} di {{ totalProjects }} Progetti
                 </div>
             </div>
+            <!-- Card -->
             <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 g-3">
-                <div class="col" v-for="project in store.projects" :key="project.id">
+                <div class="col" v-for="project in projects" :key="project.id">
                     <ProjectCard :project="project"/>
                 </div>
             </div>
             <div class="d-flex justify-content-center my-3">
-                <Pagination @prev-page="getProjects(store.currentPage - 1)" @pick-page="getProjects" @next-page="getProjects(store.currentPage + 1)"/>
+                <Pagination  @change-page="getProjects" :currentPage="currentPage" :lastPage="lastPage"/>
             </div>
         </section>
+        <!-- Loader -->
         <section v-else>
             <div class="d-flex align-items-center justify-content-center">
                 <strong class="text-info">Loading...</strong>

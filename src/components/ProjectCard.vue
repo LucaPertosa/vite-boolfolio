@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-    <div class="card h-100">
+    <div class="card h-100 position-relative">
         <img v-if="project.image" :src="getImgUrl" :alt="project.title" class="card-img-top ms_img_h">
         <div v-else class="d-flex align-items-center ms_img_h bg-secondary rounded-top">
             <p class="text-center">Nessuna immagine presente per questo progetto</p>
@@ -43,6 +43,10 @@ export default {
                 </ul>
             </div>
             <p v-else>Nessuna tecnologia associata</p>
+            <div class="position-absolute top-0 end-0">
+                <router-link class="btn btn-primary" :to="{name: 'single-project' , params: {slug: project.slug} }">Dettagli</router-link>
+            </div>
+
         </div>
     </div>
 </template>

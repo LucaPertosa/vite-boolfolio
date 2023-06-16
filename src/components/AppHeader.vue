@@ -25,7 +25,7 @@ export default {
 
 <template>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class=" ms_headerH navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Boolfolio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -44,3 +44,9 @@ export default {
         </nav>
     </header>
 </template>
+
+<style lang="scss" scoped>
+.ms_headerH {
+    height: 70px;
+}
+</style>

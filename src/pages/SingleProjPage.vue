@@ -13,12 +13,18 @@ export default {
     },
     mounted() {
         const slug = this.$route.params.slug;
-        axios.get(`${this.store.apiBaseUrl}/api/projects/${slug}`).then((resp) => {
+        axios.get(`${this.store.apiBaseUrl}/api/projects/${slug}`).then(
+            resp => {
             if (resp.data.success) {
                 console.log(resp.data.results);
                 this.project = resp.data.results
             } else {
                 this.errorMsg = resp
+            }
+        },
+        error => {
+            if (error.response.status === 404) {
+                this.$router.push({name: "not-found"})
             }
         })
     }
@@ -26,7 +32,7 @@ export default {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container py-3">
         <div v-if="project">
             <h2 class="my-3">Progetto: {{ project.title }}</h2>
             <div class="my-3">
